@@ -49,6 +49,7 @@ class App extends Component {
       },
     ],
   }
+  counter = this.state.tasks.length;
 
   deleteTask = (id) => {
     console.log("USUNIĘCIE TAKSA " + id);
@@ -75,11 +76,31 @@ class App extends Component {
     })
   }
 
+  addTask = (text, date, important) => {
+    const task = {
+      id: this.counter,
+      text: text,
+      date: date,
+      important: important,
+      active: true,
+      finishDate: null,
+    }
+    this.counter++; 
+    console.log(task)
+
+    this.setState(prevState => ({
+      tasks: [...prevState.tasks, task]
+    }))
+
+    return true;
+    
+  }
+
   render() {
     return (
       <div className="App">
         TOO do app
-        <AddTask />
+        <AddTask add={this.addTask}/>
         <TaskList  tasks={this.state.tasks} delete={this.deleteTask} change={this.changeTaskStatus}/>
       </div>
     );
